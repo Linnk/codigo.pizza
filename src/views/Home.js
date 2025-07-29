@@ -14,7 +14,7 @@ function Home() {
         <div className="d-flex flex-column min-vh-100">
             <Container fluid className="flex-grow-1 d-flex align-items-center justify-content-center">
                 <Row>
-                    <Col className="text-center">
+                    <Col className="text-center mb-5">
                         <img 
                             src="/img/transparent-pizza.png" 
                             alt="Pizza slice" 
