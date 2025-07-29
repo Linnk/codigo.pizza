@@ -1,13 +1,13 @@
 import { Container, Row, Col, Button } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
-import { generateUniqueId } from '../utilities/utils';
+import { v4 as uuidv4 } from 'uuid';
 
 function Home() {
     const navigate = useNavigate();
 
     const handleCreatePizza = () => {
-        const uniqueId = generateUniqueId();
-        navigate(`/editor/${uniqueId}`);
+        const roomId = uuidv4();
+        navigate(`/editor/${roomId}`);
     };
 
     return (
