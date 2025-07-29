@@ -21,7 +21,7 @@
     "yjs": "^13.6.27"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node node_modules/y-webrtc/bin/server.js & react-scripts start; kill %1",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

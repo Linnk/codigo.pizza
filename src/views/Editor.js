@@ -32,7 +32,7 @@ function Editor() {
                 return;
             }
 
-            const connectionInfo = collaborationRef.current.getConnectionStatus();            
+            const connectionInfo = collaborationRef.current.getConnectionStatus();
             if (!connectionInfo.connected) {
                 setConnectionStatus('disconnected');
             } else if (connectionInfo.peers === 0) {
