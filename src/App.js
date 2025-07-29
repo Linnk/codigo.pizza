@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
-import Editor from './components/Editor';
+import Home from './views/Home';
+import Editor from './views/Editor';
 
 function App() {
   useEffect(() => {

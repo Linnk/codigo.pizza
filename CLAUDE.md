@@ -20,6 +20,8 @@ This is a Create React App project using:
 - Standard CRA folder structure:
   - `src/App.js` - Main application component (currently default CRA template)
   - `src/index.js` - Application entry point
+  - `src/components/` - Folder for UI components
+  - `src/views/` - Views used by the router
   - `public/` - Static assets and index.html template
 
 ## Current State
