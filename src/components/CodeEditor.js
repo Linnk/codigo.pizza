@@ -1,12 +1,26 @@
 import MonacoEditor from '@monaco-editor/react';
 
-function CodeEditor() {
+function CodeEditor({ theme, language }) {
     return (
         <MonacoEditor
             height="100%"
-            defaultLanguage="javascript"
+            language={language}
             defaultValue="// Welcome to codigo.pizza!"
-            theme={window.matchMedia('(prefers-color-scheme: dark)').matches ? 'vs-dark' : 'light'}
+            theme={theme}
+            options={{
+                minimap: { enabled: false },
+                glyphMargin: false,
+                lineDecorationsWidth: 0,
+                lineNumbersMinChars: 3,
+                scrollBeyondLastLine: false,
+                automaticLayout: true
+            }}
+            beforeMount={(monaco) => {
+                monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+                    noSemanticValidation: true,
+                    noSyntaxValidation: true
+                });
+            }}
         />
     );
 }

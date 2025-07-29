@@ -1,14 +1,20 @@
-import { Navbar, NavbarBrand, Input, InputGroup, Button } from 'reactstrap';
+import { Navbar, NavbarBrand, Tooltip } from 'reactstrap';
 import { useState } from 'react';
 
 function NavigationBar() {
-    const [copied, setCopied] = useState(false);
+    const [tooltipOpen, setTooltipOpen] = useState(false);
     const currentUrl = window.location.href;
 
-    const copyToClipboard = () => {
-        navigator.clipboard.writeText(currentUrl);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
+    const copyToClipboard = async () => {
+        try {
+            await navigator.clipboard.writeText(currentUrl);
+            setTooltipOpen(true);
+            setTimeout(() => {
+                setTooltipOpen(false);
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
     };
 
     return (
@@ -17,21 +23,21 @@ function NavigationBar() {
                 codigo.pizza
             </NavbarBrand>
             <div className="d-flex align-items-center gap-2">
-                <InputGroup style={{ width: '300px' }}>
-                    <Input
-                        type="text"
-                        value={currentUrl}
-                        readOnly
-                        className="form-control-sm"
-                    />
-                    <Button
-                        color={copied ? 'success' : 'outline-secondary'}
-                        size="sm"
-                        onClick={copyToClipboard}
-                    >
-                        {copied ? 'Copied!' : 'Copy'}
-                    </Button>
-                </InputGroup>
+                <span
+                    id="url-text"
+                    className="text-secondary"
+                    style={{ cursor: 'pointer', userSelect: 'none' }}
+                    onClick={copyToClipboard}
+                >
+                    {currentUrl}
+                </span>
+                <Tooltip
+                    placement="bottom"
+                    isOpen={tooltipOpen}
+                    target="url-text"
+                >
+                    Copied!
+                </Tooltip>
             </div>
         </Navbar>
     );
