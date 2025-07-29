@@ -11,6 +11,7 @@ function CodeEditor({ theme, language }) {
                 minimap: { enabled: false },
                 glyphMargin: false,
                 lineDecorationsWidth: 0,
+                fontSize: 14,
                 lineNumbersMinChars: 3,
                 scrollBeyondLastLine: false,
                 automaticLayout: true
