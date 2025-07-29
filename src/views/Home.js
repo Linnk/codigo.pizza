@@ -11,14 +11,28 @@ function Home() {
     };
 
     return (
-        <Container fluid className="vh-100 d-flex align-items-center justify-content-center">
-            <Row>
-                <Col className="text-center">
-                    <h1 className="display-1 mb-4">codigo.pizza</h1>
-                    <Button color="primary" size="lg" onClick={handleCreatePizza}>Create pizza</Button>
-                </Col>
-            </Row>
-        </Container>
+        <div className="d-flex flex-column min-vh-100">
+            <Container fluid className="flex-grow-1 d-flex align-items-center justify-content-center">
+                <Row>
+                    <Col className="text-center">
+                        <img 
+                            src="/img/transparent-pizza.png" 
+                            alt="Pizza slice" 
+                            className="mb-3"
+                            style={{width: '300px', height: 'auto'}}
+                        />
+                        <h1 className="display-1 mb-4 fw-bold">codigo.pizza</h1>
+                        <p>Sharing code like sharing pizza 🍕</p>
+                        <Button outline color="danger emphasis" size="lg" onClick={handleCreatePizza}>Start new editor</Button>
+                    </Col>
+                </Row>
+            </Container>
+            <footer className="text-center py-3 mt-auto">
+                <p className="mb-0">
+                    Cooked by <a href="https://github.com/linnk" class="link-secondary" target="_blank">Ignacio Benavides</a> • Feel free to <a href="https://github.com/linnk/codigo.pizza" class="link-secondary" target="_blank">Fork it</a>
+                </p>
+            </footer>
+        </div>
     );
 }
 

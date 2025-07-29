@@ -60,6 +60,12 @@ function NavigationBar({
     return (
         <Navbar className="border-bottom px-3">
             <NavbarBrand href="/" className="fw-bold">
+                <img 
+                                src="/img/transparent-pizza.png" 
+                                alt="Pizza slice" 
+                                className="me-3"
+                                style={{width: '30px', height: 'auto'}}
+                            />
                 codigo.pizza
             </NavbarBrand>
             
