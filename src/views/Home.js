@@ -29,7 +29,7 @@ function Home() {
             </Container>
             <footer className="text-center py-3 mt-auto">
                 <p className="mb-0">
-                    Cooked by <a href="https://github.com/linnk" class="link-secondary" target="_blank">Ignacio Benavides</a> • Feel free to <a href="https://github.com/linnk/codigo.pizza" class="link-secondary" target="_blank">Fork it</a>
+                    Cooked by <a href="https://github.com/linnk" className="link-secondary" target="_blank">Ignacio Benavides</a> • Feel free to <a href="https://github.com/linnk/codigo.pizza" className="link-secondary" target="_blank">Fork it</a>
                 </p>
             </footer>
         </div>

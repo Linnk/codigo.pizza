@@ -1,6 +1,7 @@
 import MonacoEditor from '@monaco-editor/react';
 import { useEffect, useRef, useState } from 'react';
 import { MonacoBinding } from 'y-monaco';
+import { DEFAULT_CONTENT } from '../constants/defaultContent';
 
 function CodeEditor({ theme, language, ytext, provider, isConnectionReady }) {
     const editorRef = useRef(null);
@@ -26,6 +27,12 @@ function CodeEditor({ theme, language, ytext, provider, isConnectionReady }) {
                 new Set([editorRef.current]),
                 provider.awareness
             );
+
+            setTimeout(() => {
+                if (ytext.toString().length === 0) {
+                    ytext.insert(0, DEFAULT_CONTENT);
+                }
+            }, 1000);
         }
 
         return () => {
@@ -51,7 +58,7 @@ function CodeEditor({ theme, language, ytext, provider, isConnectionReady }) {
         <MonacoEditor
             height="100%"
             language={language}
-            defaultValue={ytext ? undefined : "// Welcome to codigo.pizza!"}
+            defaultValue="Connecting..."
             theme={theme}
             options={{
                 minimap: { enabled: false },
