@@ -29,11 +29,11 @@ function NavigationBar({
 
     const getConnectionStatusColor = () => {
         switch (connectionStatus) {
-            case 'connected': return 'success';
-            case 'connecting': return 'warning';
-            case 'waiting': return 'info';
-            case 'disconnected': return 'danger';
-            default: return 'secondary';
+            case 'connected': return 'text-bg-success';
+            case 'connecting': return 'text-bg-warning';
+            case 'waiting': return 'text-bg-secondary';
+            case 'disconnected': return 'text-bg-danger';
+            default: return 'text-bg-secondary';
         }
     };
 
@@ -69,13 +69,13 @@ function NavigationBar({
             <div className="d-flex align-items-center gap-3">
                 {roomId && (
                     <>
-                        <Badge color={getConnectionStatusColor()} className="d-flex align-items-center gap-1">
+                        <small className='text-secondary'>
                             <span 
-                                className="rounded-circle bg-white" 
-                                style={{ width: '6px', height: '6px' }}
+                                className={`me-2 rounded-circle ${getConnectionStatusColor()}`}
+                                style={{ width: '7px', height: '7px', display: 'inline-block' }}
                             />
                             {getConnectionStatusText()}
-                        </Badge>
+                        </small>
 
                         {connectedUsers.length > 0 && (
                             <UncontrolledDropdown>
@@ -83,9 +83,9 @@ function NavigationBar({
                                     color="link" 
                                     className="text-decoration-none p-0 d-flex align-items-center gap-2"
                                 >
-                                    <Badge color="primary" pill>
+                                    <small>
                                         {connectedUsers.length} user{connectedUsers.length !== 1 ? 's' : ''}
-                                    </Badge>
+                                    </small>
                                 </DropdownToggle>
                                 <DropdownMenu end>
                                     {connectedUsers.map((user) => (
@@ -105,19 +105,21 @@ function NavigationBar({
                             </UncontrolledDropdown>
                         )}
 
-                        <Button 
-                            color="link" 
-                            size="sm" 
-                            onClick={handleNameChange}
-                            className="text-decoration-none p-1"
-                            title="Change your name"
-                        >
-                            {currentUserName || 'Anonymous'}
-                        </Button>
+                        <small>
+                            <Button 
+                                color="link" 
+                                size="sm" 
+                                onClick={handleNameChange}
+                                className="text-decoration-none p-1"
+                                title="Change your name"
+                            >
+                                {currentUserName || 'Anonymous'}
+                            </Button>
+                        </small>
                     </>
                 )}
 
-                <span
+                <small
                     id="url-text"
                     className="text-secondary"
                     style={{ cursor: 'pointer', userSelect: 'none', fontSize: '0.9rem' }}
@@ -125,7 +127,7 @@ function NavigationBar({
                     title="Click to copy URL"
                 >
                     {window.location.href}
-                </span>
+                </small>
                 
                 <Tooltip placement="bottom" isOpen={tooltipOpen} target="url-text">
                     Copied!
