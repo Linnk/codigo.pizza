@@ -37,7 +37,7 @@ class CollaborationService {
             });
             
             const providerConfig = {
-                signaling: [process.env.PIZZA_SIGNALING_SERVER || 'ws://localhost:4444'],
+                signaling: [process.env.REACT_APP_PIZZA_SIGNALING_SERVER || 'ws://localhost:4444'],
                 maxConns: 20 + Math.floor(Math.random() * 15),
                 filterBcConns: true,
                 peerOpts: {}
