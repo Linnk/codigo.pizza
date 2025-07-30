@@ -1,4 +1,4 @@
-import { Navbar, ButtonGroup, Button, Input } from 'reactstrap';
+import { Navbar, Input } from 'reactstrap';
 
 function ToolBar({ theme, onThemeChange, language, onLanguageChange }) {
     const languages = [
@@ -23,25 +23,7 @@ function ToolBar({ theme, onThemeChange, language, onLanguageChange }) {
 
     return (
         <Navbar className="border-bottom px-3 py-2" style={{ minHeight: '48px' }}>
-            <div className="d-flex align-items-center gap-3">
-                <div className="d-flex align-items-center gap-2">
-                    <span className="text-muted small">Theme:</span>
-                    <ButtonGroup size="sm">
-                        <Button
-                            color={theme === 'light' ? 'primary' : 'outline-secondary'}
-                            onClick={() => onThemeChange('light')}
-                        >
-                            Light
-                        </Button>
-                        <Button
-                            color={theme === 'vs-dark' ? 'primary' : 'outline-secondary'}
-                            onClick={() => onThemeChange('vs-dark')}
-                        >
-                            Dark
-                        </Button>
-                    </ButtonGroup>
-                </div>
-                
+            <div className="d-flex align-items-center gap-3">                
                 <div className="d-flex align-items-center gap-2">
                     <span className="text-muted small">Language:</span>
                     <Input
@@ -56,6 +38,20 @@ function ToolBar({ theme, onThemeChange, language, onLanguageChange }) {
                                 {lang}
                             </option>
                         ))}
+                    </Input>
+                </div>
+
+                <div className="d-flex align-items-center gap-2">
+                    <span className="text-muted small">Theme:</span>
+                    <Input
+                        type="select"
+                        value={theme}
+                        onChange={(e) => onThemeChange(e.target.value)}
+                        bsSize="sm"
+                        style={{ width: '80px' }}
+                    >
+                        <option value="light">Light</option>
+                        <option value="vs-dark">Dark</option>
                     </Input>
                 </div>
             </div>
