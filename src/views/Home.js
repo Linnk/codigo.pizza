@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+import { roomIDGenerator } from '../utils/RoomIDGenerator';
 
 function Home() {
     const navigate = useNavigate();
@@ -10,7 +10,7 @@ function Home() {
     const toggle = () => setModal(!modal);
 
     const handleCreatePizza = () => {
-        const roomId = uuidv4();
+        const roomId = roomIDGenerator(10);
         navigate(`/editor/${roomId}`);
     };
 
