@@ -48,7 +48,7 @@ function NavigationBar({
 
     return (
         <Navbar className="border-bottom px-3">
-            <NavbarBrand href="/" className="fw-bold">
+            <NavbarBrand href="/" className="fw-bold font-monospace">
                 <img 
                                 src="/img/transparent-pizza.png" 
                                 alt="Pizza slice" 
