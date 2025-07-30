@@ -47,3 +47,4 @@ src/
 - Follow the existing component structure and naming conventions
 - Use the established services pattern for business logic
 - Maintain real-time collaboration features when making changes
+- Don't try to run `npm start` after making changes, assume it's already running
