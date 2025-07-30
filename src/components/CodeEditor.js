@@ -46,9 +46,23 @@ function CodeEditor({ theme, language, ytext, provider, isConnectionReady }) {
     const handleEditorDidMount = (editor, monaco) => {
         editorRef.current = editor;
 
+        // Disable all validation and error detection
         monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
             noSemanticValidation: true,
-            noSyntaxValidation: true
+            noSyntaxValidation: true,
+            noSuggestionDiagnostics: true
+        });
+
+        monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+            noSemanticValidation: true,
+            noSyntaxValidation: true,
+            noSuggestionDiagnostics: true
+        });
+
+        // Disable all built-in validation for other languages
+        monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+            validate: false,
+            allowComments: true
         });
 
         setEditorReady(true);
@@ -67,7 +81,14 @@ function CodeEditor({ theme, language, ytext, provider, isConnectionReady }) {
                 fontSize: 14,
                 lineNumbersMinChars: 3,
                 scrollBeyondLastLine: false,
-                automaticLayout: true
+                automaticLayout: true,
+                quickSuggestions: false,
+                parameterHints: { enabled: false },
+                suggestOnTriggerCharacters: false,
+                acceptSuggestionOnEnter: 'off',
+                tabCompletion: 'off',
+                wordBasedSuggestions: 'off',
+                renderValidationDecorations: 'off'
             }}
             onMount={handleEditorDidMount}
         />
