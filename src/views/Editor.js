@@ -118,6 +118,9 @@ function Editor() {
                 <CodeEditor 
                     theme={theme} 
                     language={language}
+                    ytext={collaborationRef.current?.getYText()}
+                    provider={collaborationRef.current?.provider}
+                    isConnectionReady={connectionStatus === 'connected' || connectionStatus === 'waiting'}
                 />
             </div>
         </Container>

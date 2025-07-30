@@ -21,8 +21,14 @@ class CollaborationService {
         }
 
         try {
-            // Create minimal Y.js document for WebRTC provider
+            // Create Y.js document with shared text for collaborative editing
             this.doc = new Y.Doc();
+            this.ytext = this.doc.getText('monaco-content');
+            
+            // Add debugging for Y.Text changes
+            this.ytext.observe((event) => {
+                console.log('[CollaborationService] Y.Text changed:', this.ytext.toString());
+            });
             
             const providerConfig = {
                 signaling: ['ws://localhost:4444'],
@@ -172,26 +178,32 @@ class CollaborationService {
         this.onError = callback;
     }
 
+    getYText() {
+        return this.ytext;
+    }
+
     reset() {
         this.isDestroyed = false;
-        
+
+        if (this.doc) {
+            try {
+                this.doc?.destroy();
+            } catch (error) {
+                console.warn('[CollaborationService] Error destroying document:', error, this.doc);
+            }
+            this.doc = null;
+        }
+
         if (this.provider) {
             try {
-                this.provider.destroy();
+                this.provider?.destroy();
             } catch (error) {
                 console.warn('[CollaborationService] Error destroying provider:', error);
             }
             this.provider = null;
         }
         
-        if (this.doc) {
-            try {
-                this.doc.destroy();
-            } catch (error) {
-                console.warn('[CollaborationService] Error destroying document:', error);
-            }
-            this.doc = null;
-        }
+        this.ytext = null;        
         this.awarenessStates.clear();
     }
 
