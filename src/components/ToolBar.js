@@ -53,7 +53,7 @@ function ToolBar({ theme, onThemeChange, language, onLanguageChange }) {
                     >
                         {languages.map(lang => (
                             <option key={lang} value={lang}>
-                                {lang.charAt(0).toUpperCase() + lang.slice(1)}
+                                {lang}
                             </option>
                         ))}
                     </Input>

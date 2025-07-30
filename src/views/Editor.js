@@ -77,7 +77,7 @@ function Editor() {
 
             // Listen for shared language changes
             collaborationRef.current.onSharedStateChange((sharedState) => {
-                if (sharedState.language && sharedState.language !== language) {
+                if (sharedState.language) {
                     setLanguage(sharedState.language);
                 }
             });
