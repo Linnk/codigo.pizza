@@ -24,10 +24,16 @@ class CollaborationService {
             // Create Y.js document with shared text for collaborative editing
             this.doc = new Y.Doc();
             this.ytext = this.doc.getText('monaco-content');
-            
+            this.sharedState = this.doc.getMap('shared-ui-state');
+
             // Add debugging for Y.Text changes
             this.ytext.observe((event) => {
                 console.log('[CollaborationService] Y.Text changed:', this.ytext.toString());
+            });
+
+            // Listen for shared state changes (coding language and others)
+            this.sharedState.observe((event) => {
+                this.onSharedStateChange?.(Object.fromEntries(this.sharedState.entries()));
             });
             
             const providerConfig = {
@@ -176,6 +182,21 @@ class CollaborationService {
 
     onError(callback) {
         this.onError = callback;
+    }
+
+    onSharedStateChange(callback) {
+        this.onSharedStateChange = callback;
+    }
+
+    updateSharedState(key, value) {
+        if (!this.sharedState || this.isDestroyed) return;
+        
+        try {
+            this.sharedState.set(key, value);
+            console.log(`[CollaborationService] Updated shared state: ${key} = ${value}`);
+        } catch (error) {
+            console.warn('Error updating shared state:', error);
+        }
     }
 
     getYText() {

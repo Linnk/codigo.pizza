@@ -74,6 +74,13 @@ function Editor() {
                 console.error('Collaboration error:', error);
                 updateConnectionStatus();
             });
+
+            // Listen for shared language changes
+            collaborationRef.current.onSharedStateChange((sharedState) => {
+                if (sharedState.language && sharedState.language !== language) {
+                    setLanguage(sharedState.language);
+                }
+            });
             
             updateConnectionStatus();
         };
@@ -99,6 +106,13 @@ function Editor() {
         }
     };
 
+    const handleLanguageChange = (newLanguage) => {
+        setLanguage(newLanguage);
+        if (collaborationRef.current) {
+            collaborationRef.current.updateSharedState('language', newLanguage);
+        }
+    };
+
     return (
         <Container fluid className="vh-100 p-0">
             <NavigationBar 
@@ -112,7 +126,7 @@ function Editor() {
                 theme={theme}
                 onThemeChange={setTheme}
                 language={language}
-                onLanguageChange={setLanguage}
+                onLanguageChange={handleLanguageChange}
             />
             <div style={{ height: 'calc(100vh - 104px)' }}>
                 <CodeEditor 
