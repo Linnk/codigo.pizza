@@ -9,7 +9,6 @@ function NavigationBar({
     currentUserName
 }) {
     const [tooltipOpen, setTooltipOpen] = useState(false);
-    const currentUrl = window.location.href;
 
     const copyToClipboard = async () => {
         try {
@@ -26,8 +25,6 @@ function NavigationBar({
         } catch (err) {
             console.error('Failed to copy text: ', err);
         }
-    };
-    const handleShareRoom = () => {
     };
 
     const getConnectionStatusColor = () => {
