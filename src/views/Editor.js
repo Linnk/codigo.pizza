@@ -119,14 +119,14 @@ function Editor() {
                 roomId={roomId}
                 connectedUsers={connectedUsers}
                 connectionStatus={connectionStatus}
-                onUserNameChange={handleUserNameChange}
-                currentUserName={userManagerRef.current?.getUserName()}
             />
             <ToolBar 
                 theme={theme}
                 onThemeChange={setTheme}
                 language={language}
                 onLanguageChange={handleLanguageChange}
+                currentUserName={userManagerRef.current?.getUserName()}
+                onUserNameChange={handleUserNameChange}
             />
             <div style={{ height: 'calc(100vh - 104px)' }}>
                 <CodeEditor 

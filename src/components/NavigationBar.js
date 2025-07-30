@@ -1,12 +1,10 @@
-import { Navbar, NavbarBrand, Tooltip, Badge, Button, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Navbar, NavbarBrand, Tooltip, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { useState } from 'react';
 
 function NavigationBar({ 
     roomId, 
     connectedUsers = [], 
-    connectionStatus = 'disconnected',
-    onUserNameChange,
-    currentUserName
+    connectionStatus = 'disconnected'
 }) {
     const [tooltipOpen, setTooltipOpen] = useState(false);
 
@@ -47,12 +45,6 @@ function NavigationBar({
         }
     };
 
-    const handleNameChange = () => {
-        const newName = prompt('Enter your name:', currentUserName || '');
-        if (newName && newName.trim() && onUserNameChange) {
-            onUserNameChange(newName.trim());
-        }
-    };
 
     return (
         <Navbar className="border-bottom px-3">
@@ -104,18 +96,6 @@ function NavigationBar({
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                         )}
-
-                        <small>
-                            <Button 
-                                color="link" 
-                                size="sm" 
-                                onClick={handleNameChange}
-                                className="text-decoration-none p-1"
-                                title="Change your name"
-                            >
-                                {currentUserName || 'Anonymous'}
-                            </Button>
-                        </small>
                     </>
                 )}
 
