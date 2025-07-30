@@ -15,7 +15,7 @@ function Home() {
     };
 
     return (
-        <div className="d-flex flex-column min-vh-100">
+        <div id="home-screen" className="d-flex flex-column min-vh-100">
             <Container fluid className="flex-grow-1 d-flex align-items-center justify-content-center">
                 <Row>
                     <Col className="text-center mb-5">
