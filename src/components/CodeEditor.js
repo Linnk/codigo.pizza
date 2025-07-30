@@ -79,6 +79,10 @@ function CodeEditor({ theme, language, ytext, provider, isConnectionReady }) {
                 glyphMargin: false,
                 lineDecorationsWidth: 0,
                 fontSize: 14,
+                padding: {
+                    top: 20,
+                    bottom: 40
+                },
                 lineNumbersMinChars: 3,
                 scrollBeyondLastLine: false,
                 automaticLayout: true,
