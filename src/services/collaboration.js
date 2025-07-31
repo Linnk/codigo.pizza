@@ -59,13 +59,14 @@ class CollaborationService {
             });
 
             if (this.provider.awareness && !this.isDestroyed) {
-                const userState = {
-                    id: userId,
-                    name: userName,
-                    color: this.getUserColor(userId),
-                    cursor: null
-                };
-                this.provider.awareness.setLocalStateField('user', userState);
+                // Set user info at the root level for y-monaco compatibility
+                this.provider.awareness.setLocalState({
+                    user: {
+                        id: userId,
+                        name: userName,
+                        color: this.getUserColor(userId)
+                    }
+                });
             } else {
                 console.warn('[CollaborationService] Could not set user state - awareness not available or service destroyed');
             }
@@ -140,9 +141,12 @@ class CollaborationService {
             const currentState = this.provider.awareness.getLocalState();
             const user = currentState?.user || {};
             
-            this.provider.awareness.setLocalStateField('user', {
-                ...user,
-                ...updates
+            this.provider.awareness.setLocalState({
+                ...currentState,
+                user: {
+                    ...user,
+                    ...updates
+                }
             });
         } catch (error) {
             console.warn('Error updating local user:', error);
