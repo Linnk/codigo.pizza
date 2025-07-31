@@ -30,7 +30,7 @@ function Home() {
                         <p>Ideal for coding interviews and quick collaborations.</p>
                         <Button outline color="danger emphasis" size="lg" onClick={handleCreatePizza} className='mt-2 mb-3'>Start new editor</Button>
                         <p>
-                            <small>By using our service, you agree to our <a href="#" className='link-secondary' onClick={toggle}>terms</a>.</small>
+                            <small>By using our service, you agree to our <u style={{cursor: 'pointer'}} className='link-secondary' onClick={toggle}>terms</u>.</small>
                         </p>
 
 
