@@ -34,8 +34,8 @@
     pointer-events: none;
     z-index: 1001;
     font-family: monospace;
-    opacity: 1;
-    animation: label-fade-out 3s ease-in-out forwards;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .yRemoteSelectionHead:hover::before {

@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter
 import { useNavigate } from 'react-router-dom';
 import { roomIDGenerator } from '../utils/RoomIDGenerator';
 
-function Home() {
+export default function Home() {
     const navigate = useNavigate();
 
     const [modal, setModal] = useState(false);
@@ -26,8 +26,8 @@ function Home() {
                             style={{width: '300px', height: 'auto'}}
                         />
                         <h1 className="display-1 mb-4 fw-bold font-monospace">codigo.pizza</h1>
-                        <p>Peer-to-peer code editor in the browser.</p>
-                        <p>Ideal for coding interviews and quick collaborations.</p>
+                        <h2 className='fs-4'>Peer-to-peer code editor in the browser.</h2>
+                        <p>Ideal for (mock) coding interviews and quick collaborations.</p>
                         <Button outline color="danger emphasis" size="lg" onClick={handleCreatePizza} className='mt-2 mb-3'>Start new editor</Button>
                         <p>
                             <small>By using our service, you agree to our <u style={{cursor: 'pointer'}} className='link-secondary' onClick={toggle}>terms</u>.</small>
@@ -69,11 +69,9 @@ function Home() {
             </Container>
             <footer className="text-center py-3 mt-auto">
                 <p className="mb-0">
-                    Cooked by <a href="https://github.com/linnk" className="link-secondary" target="_blank" rel="noreferrer">Ignacio Benavides</a> • Feel free to <a href="https://github.com/linnk/codigo.pizza" className="link-secondary" target="_blank" rel="noreferrer">Fork it</a> • <a href="https://opensource.org/licenses/BSD-3-Clause" className="link-secondary" target="_blank" rel="noreferrer">BSD 3-Clause</a>
+                    Cooked by <a href="https://github.com/linnk" className="link-body-emphasis" target="_blank" rel="noreferrer">Ignacio Benavides</a> • <a href="https://github.com/linnk/codigo.pizza" className="link-secondary" target="_blank" rel="noreferrer">Fork it</a> • <a href="https://opensource.org/licenses/BSD-3-Clause" className="link-secondary" target="_blank" rel="noreferrer">BSD 3-Clause</a>
                 </p>
             </footer>
         </div>
     );
 }
-
-export default Home;
