@@ -8,7 +8,6 @@ function CodeEditor({ theme, language, ytext, provider, isConnectionReady }) {
     const editorRef = useRef(null);
     const bindingRef = useRef(null);
     const [editorReady, setEditorReady] = useState(false);
-    const [connectedUsers, setConnectedUsers] = useState([]);
 
     // Setup awareness listeners for cursor tracking
     useEffect(() => {
@@ -28,7 +27,6 @@ function CodeEditor({ theme, language, ytext, provider, isConnectionReady }) {
                     });
                 }
             });
-            setConnectedUsers(users);
             updateUserStyles(users);
         };
 
