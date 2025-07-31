@@ -2,22 +2,22 @@ import { Navbar, Input, Button } from 'reactstrap';
 
 function ToolBar({ theme, onThemeChange, language, onLanguageChange, currentUserName, onUserNameChange }) {
     const languages = [
-        'javascript',
-        'typescript',
-        'python',
-        'java',
         'cpp',
         'csharp',
-        'go',
-        'rust',
-        'php',
-        'ruby',
-        'html',
         'css',
+        'go',
+        'html',
+        'java',
+        'javascript',
         'json',
         'markdown',
+        'php',
+        'python',
+        'ruby',
+        'rust',
         'sql',
-        'xml',
+        'swift',
+        'typescript',
         'yaml'
     ];
 
