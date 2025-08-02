@@ -30,10 +30,10 @@ function ToolBar({ theme, onThemeChange, language, onLanguageChange, currentUser
 
     return (
         <Navbar className="border-bottom px-3 py-2" style={{ minHeight: '48px' }}>
-            <div className="d-flex align-items-center justify-content-between w-100">
-                <div className="d-flex align-items-center gap-3">                
+            <div className="d-flex align-items-center flex-column flex-md-row w-100">
+                <div className="d-flex align-items-center gap-3 w-100 w-md-auto justify-content-md-start">                
                     <div className="d-flex align-items-center gap-2">
-                        <span className="text-muted small">Language:</span>
+                        <span className="text-muted small d-sm-inline d-none">Language:</span>
                         <Input
                             type="select"
                             value={language}
@@ -50,7 +50,7 @@ function ToolBar({ theme, onThemeChange, language, onLanguageChange, currentUser
                     </div>
 
                     <div className="d-flex align-items-center gap-2">
-                        <span className="text-muted small">Theme:</span>
+                        <span className="text-muted small d-sm-inline d-none">Theme:</span>
                         <Input
                             type="select"
                             value={theme}
@@ -64,8 +64,8 @@ function ToolBar({ theme, onThemeChange, language, onLanguageChange, currentUser
                     </div>
                 </div>
 
-                <div className="d-flex align-items-center">
-                    Name: 
+                <div className="d-flex align-items-center w-100 w-md-auto justify-content-md-end">
+                    <span>Name: </span>
                     <Button 
                         color="link" 
                             onClick={handleNameChange}
