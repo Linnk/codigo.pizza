@@ -114,7 +114,7 @@ function CodeEditor({ theme, language, ytext, provider, isConnectionReady }) {
             const userStyles = document.querySelectorAll('[data-monaco-user-styles]');
             userStyles.forEach(style => style.remove());
         };
-    }, [ytext, provider, editorReady, isConnectionReady]);
+    }, [ytext, provider, editorReady, isConnectionReady, isRoomCreator]);
 
     const handleEditorDidMount = (editor, monaco) => {
         editorRef.current = editor;
