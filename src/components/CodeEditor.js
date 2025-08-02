@@ -119,6 +119,9 @@ function CodeEditor({ theme, language, ytext, provider, isConnectionReady }) {
     const handleEditorDidMount = (editor, monaco) => {
         editorRef.current = editor;
 
+        // Set End of Line sequence to LF
+        editor.getModel().setEOL(monaco.editor.EndOfLineSequence.LF);
+
         // Disable all validation and error detection
         monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
             noSemanticValidation: true,
