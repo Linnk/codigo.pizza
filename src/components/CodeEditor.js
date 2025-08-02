@@ -1,10 +1,13 @@
 import MonacoEditor from '@monaco-editor/react';
 import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { MonacoBinding } from 'y-monaco';
 import { DEFAULT_CONTENT } from '../constants/defaultContent';
 import './CodeEditor.css';
 
 function CodeEditor({ theme, language, ytext, provider, isConnectionReady }) {
+    const location = useLocation();
+    const isRoomCreator = location.state?.isRoomCreator || false;
     const editorRef = useRef(null);
     const bindingRef = useRef(null);
     const [editorReady, setEditorReady] = useState(false);
@@ -92,11 +95,13 @@ function CodeEditor({ theme, language, ytext, provider, isConnectionReady }) {
                 provider.awareness
             );
 
-            setTimeout(() => {
-                if (ytext.toString().length === 0) {
-                    ytext.insert(0, DEFAULT_CONTENT);
-                }
-            }, 1000);
+            if (isRoomCreator) {
+                setTimeout(() => {
+                    if (ytext.toString().length === 0) {
+                        ytext.insert(0, DEFAULT_CONTENT);
+                    }
+                }, 1000);
+            }
         }
 
         return () => {

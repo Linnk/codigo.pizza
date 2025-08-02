@@ -11,7 +11,11 @@ export default function Home() {
 
     const handleCreatePizza = () => {
         const roomId = roomIDGenerator(10);
-        navigate(`/editor/${roomId}`);
+        navigate(`/editor/${roomId}`, { 
+            state: { 
+                isRoomCreator: true
+            } 
+        });
     };
 
     return (
