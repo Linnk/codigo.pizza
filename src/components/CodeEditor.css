@@ -5,13 +5,17 @@
 }
 
 .yRemoteSelectionHead {
-    position: relative;
+    position: absolute;
+    z-index: 10001;
+    pointer-events: auto;
+    width: 2rem;
+    height: 100%;
 }
 
 .yRemoteSelectionHead::after {
     content: '';
     position: absolute;
-    width: 4px;
+    width: 2px;
     height: 100%;
     top: 0;
     left: 0;
@@ -21,21 +25,22 @@
 }
 
 .yRemoteSelectionHead::before {
-    content: "";
+    pointer-events:all;
+    content: '';
     position: absolute;
     top: -22px;
     left: 0;
     background-color: gray;
     color: black;
-    padding: 0px 5px;
+    padding: 0px 4px;
     font-size: 11px;
     font-weight: 500;
     white-space: nowrap;
     pointer-events: none;
-    z-index: 1001;
+    z-index: 10002;
     font-family: monospace;
-    opacity: 0;
-    visibility: hidden;
+    opacity: 0.0;
+    /*animation: label-fade-out 1s ease-in-out forwards;*/
 }
 
 .yRemoteSelectionHead:hover::before {
@@ -45,7 +50,7 @@
 
 @keyframes cursor-blink {
     0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
+    51%, 100% { opacity: 0.0; }
 }
 
 @keyframes label-fade-out {

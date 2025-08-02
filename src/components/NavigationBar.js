@@ -101,7 +101,7 @@ function NavigationBar({
 
                 <small
                     id="url-text"
-                    className="text-secondary"
+                    className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover text-decoration-underline"
                     style={{ cursor: 'pointer', userSelect: 'none', fontSize: '0.9rem' }}
                     onClick={copyToClipboard}
                     title="Click to copy URL"

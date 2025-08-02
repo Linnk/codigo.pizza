@@ -161,7 +161,9 @@ function CodeEditor({ theme, language, ytext, provider, isConnectionReady }) {
                 acceptSuggestionOnEnter: 'off',
                 tabCompletion: 'off',
                 wordBasedSuggestions: 'off',
-                renderValidationDecorations: 'off'
+                renderValidationDecorations: 'off',
+                hover: { enabled: false },
+                suggest: { showKeywords: false, showSnippets: false, showFunctions: false, showVariables: false }
             }}
             onMount={handleEditorDidMount}
         />
