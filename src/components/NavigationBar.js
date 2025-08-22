@@ -8,7 +8,7 @@ function NavigationBar({
 }) {
     const [tooltipOpen, setTooltipOpen] = useState(false);
 
-    const copyToClipboard = async () => {
+    function copyToClipboard() {
         try {
             const url = `${window.location.origin}/editor/${roomId}`;
 
@@ -25,7 +25,7 @@ function NavigationBar({
         }
     };
 
-    const getConnectionStatusColor = () => {
+    function getConnectionStatusColor() {
         switch (connectionStatus) {
             case 'connected': return 'text-bg-success';
             case 'connecting': return 'text-bg-warning';
@@ -35,7 +35,7 @@ function NavigationBar({
         }
     };
 
-    const getConnectionStatusText = () => {
+    function getConnectionStatusText() {
         switch (connectionStatus) {
             case 'connected': return 'Connected';
             case 'connecting': return 'Connecting...';

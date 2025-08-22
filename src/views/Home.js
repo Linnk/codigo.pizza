@@ -9,7 +9,7 @@ export default function Home() {
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
 
-    const handleCreatePizza = () => {
+    function handleCreatePizza() {
         const roomId = roomIDGenerator(10);
         navigate(`/editor/${roomId}`, { 
             state: { 

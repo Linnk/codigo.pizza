@@ -25,67 +25,48 @@ function Editor() {
         if (!userManagerRef.current) {
             userManagerRef.current = new UserManager();
         }
+
+        // Clean up existing collaboration service
+        if (collaborationRef.current) {
+            console.log('[Editor] Cleaning up existing collaboration service');
+            collaborationRef.current.destroy();
+            collaborationRef.current = null;
+        }
+
+        console.log(`[Editor] Initialization of Room ID ${roomId}`);
+
+        // Create fresh collaboration service
+        collaborationRef.current = new CollaborationService();        
+
+        collaborationRef.current.initializeConnection(
+            roomId,
+            userManagerRef.current.getUserId(),
+            userManagerRef.current.getUserName()
+        );
         
-        const updateConnectionStatus = () => {
-            if (!collaborationRef.current) {
-                setConnectionStatus('disconnected');
-                return;
-            }
-
-            const connectionInfo = collaborationRef.current.getConnectionStatus();
-            if (!connectionInfo.connected) {
-                setConnectionStatus('disconnected');
-            } else if (connectionInfo.peers === 0) {
-                setConnectionStatus('waiting');
-            } else {
-                setConnectionStatus('connected');
-            }
-        };
-        
-        const initializeRoom = async () => {
-
-            // Clean up existing collaboration service
-            if (collaborationRef.current) {
-                console.log('[Editor] Cleaning up existing collaboration service');
-                collaborationRef.current.destroy();
-                collaborationRef.current = null;
-            }
-
-            console.log(`[Editor] Initialization of Room ID ${roomId}`);
-
-            // Create fresh collaboration service
-            collaborationRef.current = new CollaborationService();
-
-            const userId = userManagerRef.current.getUserId();
-            const userName = userManagerRef.current.getUserName();
-            
-            collaborationRef.current.initializeConnection(roomId, userId, userName);
-            
-            collaborationRef.current.onCollaboratorsChange((usersConnected) => {
-                setConnectedUsers(usersConnected);
-                updateConnectionStatus();
-            });
-
-            collaborationRef.current.onConnectionStatusChange(() => {
-                updateConnectionStatus();
-            });
-
-            collaborationRef.current.onError((error) => {
-                console.error('Collaboration error:', error);
-                updateConnectionStatus();
-            });
-
-            // Listen for shared language changes
-            collaborationRef.current.onSharedStateChange((sharedState) => {
-                if (sharedState.language) {
-                    setLanguage(sharedState.language);
-                }
-            });
-            
+        collaborationRef.current.onCollaboratorsChange((usersConnected) => {
+            setConnectedUsers(usersConnected);
             updateConnectionStatus();
-        };
+        });
 
-        initializeRoom();
+        collaborationRef.current.onConnectionStatusChange(() => {
+            updateConnectionStatus();
+        });
+
+        collaborationRef.current.onError((error) => {
+            console.error('Collaboration error:', error);
+            updateConnectionStatus();
+        });
+
+        // Listen for shared language changes
+        collaborationRef.current.onSharedStateChange((sharedState) => {
+            if (sharedState.language) {
+                setLanguage(sharedState.language);
+            }
+        });
+        
+        updateConnectionStatus();
+
     }, [roomId]);
 
     // Cleanup on component unmount
@@ -99,14 +80,30 @@ function Editor() {
         };
     }, []);
 
-    const handleUserNameChange = (newName) => {
+    function updateConnectionStatus() {
+        if (!collaborationRef.current) {
+            setConnectionStatus('disconnected');
+            return;
+        }
+
+        const connectionInfo = collaborationRef.current.getConnectionStatus();
+        if (!connectionInfo.connected) {
+            setConnectionStatus('disconnected');
+        } else if (connectionInfo.peers === 0) {
+            setConnectionStatus('waiting');
+        } else {
+            setConnectionStatus('connected');
+        }
+    };
+
+    function handleUserNameChange(newName) {
         if (userManagerRef.current && collaborationRef.current) {
             userManagerRef.current.setUserName(newName);
             collaborationRef.current.setUserName(newName);
         }
     };
 
-    const handleLanguageChange = (newLanguage) => {
+    function handleLanguageChange(newLanguage) {
         setLanguage(newLanguage);
         if (collaborationRef.current) {
             collaborationRef.current.updateSharedState('language', newLanguage);
