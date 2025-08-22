@@ -28,7 +28,7 @@ function NavigationBar({
     function getConnectionStatusColor() {
         switch (connectionStatus) {
             case 'connected': return 'text-bg-success';
-            case 'connecting': return 'text-bg-warning';
+            case 'connecting': return 'text-bg-secondary';
             case 'waiting': return 'text-bg-secondary';
             case 'disconnected': return 'text-bg-danger';
             default: return 'text-bg-secondary';
@@ -61,7 +61,7 @@ function NavigationBar({
             <div className="d-flex align-items-center gap-1">
                 {roomId && (
                     <>
-                        <small className='text-secondary'>
+                        <small className='text-secondary me-3'>
                             <span 
                                 className={`me-2 rounded-circle ${getConnectionStatusColor()}`}
                                 style={{ width: '7px', height: '7px', display: 'inline-block' }}
@@ -70,7 +70,7 @@ function NavigationBar({
                         </small>
 
                         {connectedUsers.length > 0 && (
-                            <UncontrolledDropdown className='d-inline-block d-sm-block ms-3 me-3' >
+                            <UncontrolledDropdown className='d-inline-block d-sm-block me-3' >
                                 <DropdownToggle 
                                     color="link" 
                                     className="text-decoration-none p-0 gap-2"

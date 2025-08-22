@@ -5,7 +5,6 @@ class CollaborationService {
     constructor() {
         this.doc = null;
         this.provider = null;
-        this.awarenessStates = new Map();
         this.isDestroyed = false;
         this.userColors = [
             '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
@@ -42,20 +41,22 @@ class CollaborationService {
                 filterBcConns: true,
                 peerOpts: {}
             };
+
+            const handleConnectionStatusChange = () => {
+                if (!this.isDestroyed) {
+                    this.onConnectionStatusChange?.();
+                }
+            }
             
             this.provider = new WebrtcProvider(roomId, this.doc, providerConfig);
 
-            this.provider.on('status', (status) => {
-                if (!this.isDestroyed) {
-                    this.onConnectionStatusChange?.();
-                }
-            });
+            this.provider.on('status', handleConnectionStatusChange);
+            this.provider.on('peers', handleConnectionStatusChange);
 
-            // Listen for room connection events
-            this.provider.on('peers', ({ webrtcPeers, bcPeers }) => {
-                if (!this.isDestroyed) {
-                    this.onConnectionStatusChange?.();
-                }
+            // Listen for signaling server connectivity
+            this.provider.signalingConns.forEach(conn => {
+                conn.on('connect', handleConnectionStatusChange);
+                conn.on('disconnect', handleConnectionStatusChange);
             });
 
             if (this.provider.awareness && !this.isDestroyed) {
@@ -71,8 +72,13 @@ class CollaborationService {
                 console.warn('[CollaborationService] Could not set user state - awareness not available or service destroyed');
             }
 
-            this.setupAwarenessListeners();
-            
+            // Listen for users connecting and disconnecting
+            this.provider.awareness.on('change', () => {
+                if (!this.isDestroyed) {
+                    this.onCollaboratorsChange?.(this.getConnectedUsers());
+                }
+            });
+
             return this.provider;
         } catch (error) {
             console.error('[CollaborationService] Failed to initialize collaboration connection:', error);
@@ -80,39 +86,6 @@ class CollaborationService {
             throw error;
         }
     }
-
-    setupAwarenessListeners() {
-        if (!this.provider) return;
-
-        this.provider.awareness.on('change', (changes) => {
-            const awareness = this.provider.awareness;
-            
-            changes.added.forEach(clientId => {
-                const state = awareness.getStates().get(clientId);
-                if (state && state.user) {
-                    this.awarenessStates.set(clientId, state);
-                    this.onCollaboratorsChange?.(this.getConnectedUsers());
-                }
-            });
-
-            changes.updated.forEach(clientId => {
-                const state = awareness.getStates().get(clientId);
-                if (state && state.user) {
-                    this.awarenessStates.set(clientId, state);
-                    this.onCollaboratorsChange?.(this.getConnectedUsers());
-                }
-            });
-
-            changes.removed.forEach(clientId => {
-                const state = this.awarenessStates.get(clientId);
-                if (state && state.user) {
-                    this.awarenessStates.delete(clientId);
-                    this.onCollaboratorsChange?.(this.getConnectedUsers());
-                }
-            });
-        });
-    }
-
 
     getUserColor(userId) {
         // Use a simple hash function to assign consistent colors based on user ID
@@ -126,7 +99,7 @@ class CollaborationService {
 
     getConnectedUsers() {
         const users = [];
-        this.awarenessStates.forEach((state) => {
+        this.provider?.awareness?.getStates()?.forEach((state) => {
             if (state.user) {
                 users.push(state.user);
             }
@@ -229,7 +202,6 @@ class CollaborationService {
         }
         
         this.ytext = null;        
-        this.awarenessStates.clear();
     }
 
     destroy() {
@@ -238,18 +210,13 @@ class CollaborationService {
     }
 
     isConnected() {
-        const connected = this.provider?.connected || false;
-        return connected;
+        return this.provider.signalingConns.some(conn => conn.connected);
     }
 
     getConnectionStatus() {
-        if (!this.provider) {
-            return 'disconnected';
-        }
-        
         const status = {
-            connected: this.provider.connected,
-            peers: this.provider.room?.webrtcConns?.size || 0,
+            connected: this.isConnected(),
+            peers: this.provider?.room?.webrtcConns?.size || 0,
             users: this.getConnectedUsers().length
         };
         

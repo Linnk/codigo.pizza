@@ -16,7 +16,7 @@ function Editor() {
     );
     const [language, setLanguage] = useState('javascript');
     const [connectedUsers, setConnectedUsers] = useState([]);
-    const [connectionStatus, setConnectionStatus] = useState('disconnected');
+    const [connectionStatus, setConnectionStatus] = useState('connecting');
     
     const collaborationRef = useRef(null);
     const userManagerRef = useRef(null);
@@ -87,6 +87,7 @@ function Editor() {
         }
 
         const connectionInfo = collaborationRef.current.getConnectionStatus();
+
         if (!connectionInfo.connected) {
             setConnectionStatus('disconnected');
         } else if (connectionInfo.peers === 0) {
